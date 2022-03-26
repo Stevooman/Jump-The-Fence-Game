@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Provides control of the player and controls the movements, animations
+/// and particle effects associated with the player.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     public bool IsOnGround { get; set; }
@@ -24,7 +28,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip crashSound;
 
-
+    /// <summary>
+    /// Initializes the properties of this class.
+    /// </summary>
     private void Awake()
     {
         IsOnGround = true;
@@ -37,16 +43,22 @@ public class PlayerController : MonoBehaviour
         GravityModifier = 2.5f;
         JumpForce = 800;
         SoundEffectVolume = 0.4f;
-    }
-
-    void Start()
-    {
         PlayerRigidBody = GetComponent<Rigidbody>();
         PlayerAnimation = GetComponent<Animator>();
         PlayerAudio = GetComponent<AudioSource>();
+    }
+
+    /// <summary>
+    /// Adjusts the gravity in the game.
+    /// </summary>
+    void Start()
+    {
         Physics.gravity *= GravityModifier;
     }
 
+    /// <summary>
+    /// Controls the player jump mechanic and stops the dirt animation while in the air.
+    /// </summary>
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround && !GameOver)
@@ -60,6 +72,11 @@ public class PlayerController : MonoBehaviour
             
     }
 
+    /// <summary>
+    /// Controls collision detection with the ground and obstacles.
+    /// Controls sound effect and particles upon collision.
+    /// </summary>
+    /// <param name="collision">Collision object created when two objects collide.</param>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag(GroundTag) && !GameOver)
@@ -76,7 +93,6 @@ public class PlayerController : MonoBehaviour
             PlayerAudio.PlayOneShot(crashSound, SoundEffectVolume);
             explosion.Play();
             dirt.Stop();
-
         }    
     }
 }

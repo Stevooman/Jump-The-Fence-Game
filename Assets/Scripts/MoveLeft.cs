@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Provides control over the background and obstacle movements.
+/// </summary>
 public class MoveLeft : MonoBehaviour
 {
     public string PlayerObjectName { get; private set; }
@@ -11,6 +14,9 @@ public class MoveLeft : MonoBehaviour
 
     public PlayerController PlayerControllerScript { get; private set; }
 
+    /// <summary>
+    /// Initializes the properties of this class.
+    /// </summary>
     private void Awake()
     {
         PlayerObjectName = "Player";
@@ -21,11 +27,10 @@ public class MoveLeft : MonoBehaviour
             GameObject.Find(PlayerObjectName).GetComponent<PlayerController>();
     }
 
-    void Start()
-    {
-        
-    }
-
+    /// <summary>
+    /// Moves the background and obstacle through space and destroys the obstacle
+    /// when it leaves the screen.
+    /// </summary>
     void Update()
     {
         if (PlayerControllerScript.GameOver == false)
